@@ -9,6 +9,19 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+//Importa o módulo mongoose
+var mongoose = require('mongoose');
+
+//Configura a conexão padrão do mongoose
+var mongoDB = 'mongodb://myTester:lgptest2020@127.0.0.1:27017/?authSource=test';
+mongoose.connect(mongoDB, { useNewUrlParser: true});
+
+//Obtém a conexão padão
+var db = mongoose.connection;
+
+//Vincula a conexão ao evento de erros (para obter notificações de erros da conexão)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

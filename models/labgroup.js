@@ -16,6 +16,7 @@ var LabGroupSchema = new Schema({
     
     responsavel: {
         type: Schema.Types.ObjectId,
+        require: true,
         ref: 'Pesquisador'
     },
     idioma: {

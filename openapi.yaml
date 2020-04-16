@@ -1,0 +1,114 @@
+openapi: 3.0.3
+#Descrição da API
+info:
+  title: Research API
+  description: >
+    Especificação da API do site dos laboratórios e grupos de estudos da 
+    [Universidade Federal do Piauí](https://ufpi.br/). A API trabalha no 
+    backend do site. O sistema será o padrão para o site de todos laboratório, 
+    grupo ou núcleo de pesquisa da UFPI, sendo os seus respectivos coordenadores 
+    responsáveis por alimentar a página e, por tanto , os que terão acesso a API.
+  termsOfService:
+  contact:
+    name: Suporte da API
+    url: http://research.api/support
+    email: research_suporte@ufpi.edu.br
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+
+#Servidores da API
+servers:
+  url: http://localhost:{port}/{basePath}
+  description: Servidor de Desenvolvimento
+  variables:
+    port:
+      enum:
+        - '3000'
+      default: '3000'
+      description: Porta na qual o servidor está hospedado.
+    basePath:
+      default: v1
+      description: Indica a versão a API.
+
+paths:
+  /:
+    summary: 
+    description:
+    options:
+  /labgroup:
+    summary: Cadsatro de um Grupo de Pesquisa
+    description: >
+      Permite o cadastro das informações do grupo de pesquisa.
+      O caminho é usado para fazer o cadastro de novos grupos de pesquisa.
+    post:
+      tags:
+      - labgroup
+      summary: Insere um novo Grupo de Pesquisa no banco de dados.
+      operationId: cadastraLabGroup
+      description: >
+        Cadastra um novo Grupo de Pesquisa no banco de dados.
+      externalDocs:
+        description:
+        url: 
+      parameters:
+        name: id
+        in: path
+        description: **id** deve ser passado no path.
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: integer
+        style: simple
+        example: 42299
+      requestBody:
+      responses:
+      callbacks:
+      deprecated: false
+      security:
+    options:
+    parameters:
+      id:
+        description: Número identificador do grupo de pesquisa.
+  /labgroup/{id}:
+    summary: Acesso a todas as informações do Grupo de Pesquisa
+    description: >
+      Fornece acesso a todas informações do Grupo de Pesquisa.
+    get:
+    put:
+    patch:
+    delete:
+    options:
+    parameters:
+  /idioma:
+  /idioma/{id}:
+  /instituicao:
+  /instituicao/{id}:
+  /linha:
+  /linha/{id}:
+  /pesquisador:
+  /pesquisador/{id}:
+  /projeto:
+  /projeto/{id}:
+  /publicacao:
+  /publicacao/{id}:
+  /sobre:
+  /sobre/{id}:
+  /tema:
+  /tema/{id}:
+components:
+  schemas:
+  responses:
+  parameters:
+  examples:
+  requestBodies:
+  headers:
+  securitySchemes:
+  links:
+  callbacks:
+
+security:
+tags:
+externalDocs:

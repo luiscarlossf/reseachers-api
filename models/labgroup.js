@@ -43,7 +43,7 @@ var LabGroupSchema = new Schema({
 
 //Virtual para URL do LabGroup
 LabGroupSchema.virtual('url').get(function(){
-    return '/labgroup/' + this._id;
+    return '/labgroups/' + this._id;
 });
 
 //Exportando o modelo LabGroup

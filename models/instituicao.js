@@ -23,7 +23,7 @@ var InstituicaoSchema = new Schema({
 
 //Virtual para URL do Instituicao
 InstituicaoSchema.virtual('url').get(function(){
-    return '/instituicao/' + this._id;
+    return '/instituicoes/' + this._id;
 });
 
 //Exportando o modelo Instituicao

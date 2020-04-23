@@ -15,9 +15,9 @@ var mongoose = require('mongoose');
 
 //Configura a conexão padrão do mongoose
 var mongoDB = 'mongodb://myTester:lgptest2020@127.0.0.1:27017/?authSource=test';
-mongoose.connect(mongoDB, { useNewUrlParser: true});
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
-//Obtém a conexão padão
+//Obtém a conexão padrão
 var db = mongoose.connection;
 
 //Vincula a conexão ao evento de erros (para obter notificações de erros da conexão)

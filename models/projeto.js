@@ -41,7 +41,7 @@ ProjetoSchema.virtual('finalizado').get(function(){
 
 //Virtual para URL do Projeto
 ProjetoSchema.virtual('url').get(function(){
-    return '/projeto/' + this._id;
+    return '/projetos/' + this._id;
 });
 
 //Exportando o modelo Projeto

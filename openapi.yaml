@@ -37,7 +37,9 @@ paths:
     summary: 
     description:
     options:
-  /labgroup:
+
+### LABGROUPS ###
+  /labgroups:
     summary: Cadsatro de um Grupo de Pesquisa
     description: >
       Permite o cadastro das informações do grupo de pesquisa.
@@ -82,26 +84,430 @@ paths:
     delete:
     options:
     parameters:
-  /idioma:
-  /idioma/{id}:
-  /instituicao:
-  /instituicao/{id}:
-  /linha:
-  /linha/{id}:
-  /pesquisador:
-  /pesquisador/{id}:
-  /projeto:
-  /projeto/{id}:
-  /publicacao:
-  /publicacao/{id}:
-  /sobre:
-  /sobre/{id}:
-  /tema:
-  /tema/{id}:
+
+############ EXEMPLO DE TODOS OS CAMPOS DO PATH ##########
+  /example:
+    summary: 
+    description:
+    get:
+      tags:
+      summary:
+      description: 
+      operationId: 
+      externalDocs:
+        description:
+        url:
+      parameters:
+      - name:
+        in:
+        description:
+        required:
+        deprecated:
+        allowEmptyValue:
+        schema:
+        style:
+      requestBody:
+        description:
+        content: 
+          application/json: 
+            schema:
+              example:
+            examples:
+            enconding:
+              contentType:
+              headers:
+        required: false
+      responses:
+        '200':
+          description:
+          headers:
+          content:
+            application/json:
+              schema:
+                type:
+                items:
+                  type:
+                example:
+                  idiomas:
+                    summary:
+                    description:
+                    value: 
+                    externalValue:
+          links:
+        default:
+          description:
+          headers:
+          content:
+          links:
+      callbacks:
+      deprecated:
+      security:
+      servers:
+
+#### IDIOMA ####
+  /idiomas:
+    summary: Acesso aos idiomas.
+    description: >
+      Permite realizar operações de consulta sobre todos os idiomas 
+      armazenados e também de cadastro de novos idiomas.
+
+##########
+    get:
+      tags:
+      - idiomas
+      summary: "Retorna todos os idiomas"
+      description: >
+        Retorna todos os idiomas que o usuário tem acesso. A quantidade de elementos retornados
+        pode ser controlada pelos parâmetro **offset** e **limit**. Além disso, 
+        os elementos podem ser ordenados de acordo com parâmetro **sort**.
+      operationId: idiomaList
+      parameters:
+        $ref: '#/components/parameters/offsetParam'
+        $ref: '#/components/parameters/limitParam'
+        $ref: '#/components/parameters/sortParam'
+      requestBody:
+        required: false
+      responses:
+        '200':
+          description: Os idiomas foram recuperados com sucesso e transmitidos no corpo da resposta.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Idioma'
+                example:
+                  idiomas:
+                    summary: Uma lista de idioma como exemplo.
+                    description: >
+                      O exemplo mostra como seria representado a lista de idiomas
+                      armazenados no bacno de dados. Sendo estes idiomas o brasileiro e o americano.
+                    value: {[{'_id': 1,'codigo': 'pt-br', 'nome': 'Português (Brasil)', 'imagePath': '../src/images/ptbr.svg', 'url': '/idiomas/1'},{'_id': 10,'codigo': 'en-us', 'nome': 'Inglês (Estados Unidos)', 'imagePath': '../src/images/enus.svg', 'url': '/idiomas/10'}]}
+        '204':
+          description: "Nenhum idioma armazenado no momento."
+
+        '400':
+          description: >
+            A sintaxe ou estrutura da requisisão inválida. 
+            O servidor não conseguiu entender a requisição.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroGeral'
+      deprecated: false
+##############
+    post:
+      tags:
+      - idiomas
+      summary: Adiciona um novo idioma
+      description: > 
+        Adiciona um novo idioma ao banco de dados. 
+      operationId: idiomaCreate
+      requestBody:
+        description: "No corpo da requisição "
+        content: 
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Idioma'
+        required: true
+      responses:
+        '201':
+          description: >
+            O código 201 indica que o idioma foi criado com sucesso. O link para acessar o 
+            novo idioma cadastrado é enviado no corpo da resposta.
+          headers:
+            Location:
+              description: "Link do idioma criado."
+              schema:
+                type: string
+
+        '400':
+          description: >
+            O códgio 400 indica que a sintaxe ou estrutura da requisisão inválida. 
+            O servidor não conseguiu entender a requisição.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroGeral'
+##########
+      deprecated: false
+    options:
+    head:
+    
+
+  /idiomas/{id}:
+    summary:
+    description:
+    get:
+    post:
+    put:
+    patch:
+    options:
+    head:
+    parameters:
+
+### INSTITUICOES ###
+  /instituicoes:
+    summary:
+    description:
+    get:
+    post:
+    options:
+    head:
+    parameters:
+  /instituicoes/{id}:
+    summary:
+    description:
+    get:
+    post:
+    options:
+    head:
+    parameters:
+  /linhas:
+  /linhas/{id}:
+  /pesquisadores:
+  /pesquisadores/{id}:
+  /projetos:
+  /projetos/{id}:
+  /publicacoes:
+  /publicacoes/{id}:
+  /sobres:
+  /sobres/{id}:
+  /temas:
+  /temas/{id}:
 components:
   schemas:
+    ErroGeral:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    Idioma:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        codigo:
+          type: string
+          required: true
+        nome: 
+          type: string
+          required: true
+        imagePath:
+          type: string
+        url:
+          type: string
+    Instituicao:
+      nome:
+        type: string
+        require: true
+      logoPath:
+        type: string
+      linkSite:
+        type: string
+      categoria:
+        type: string
+        require: true
+        enum: ['Empresa Parceira', 'Instituição Parceira', 'Empresa Apoiadora', 'Instituição Apoiadora']
+    Labgroup:
+      link: 
+        type: string
+        require: true
+      tipo:
+        type: string
+        require: true
+        enum: ['Laboratório de Pesquisa', 'Grupo de Pesquisa', 'Núcleo de Pesquisa']
+      responsavel:
+        type: object
+      idioma:
+        $ref: '#/components/schemas/Idioma'
+      tema:
+        $ref: '#/components/schemas/Tema'
+      sobre:
+        $ref: '#/components/schemas/Sobre'
+      publicacoes:
+        type: array
+          items:
+            $ref: '#/components/schemas/Publicacao'
+      projetos:
+        type: array
+          items:
+            $ref: '#/components/schemas/Projeto'
+    Linha:
+      labgroup:
+        $ref: '#/components/schemas/Labgroup'
+      nome:
+        type: string
+        uniqueItems: true
+        required: true
+      imagePath:
+        type: string
+      descricao:
+        type: string
+    Pesquisador:
+      labgroup:
+        $ref: '#/components/schemas/Labgroup'
+      primeiroNome:
+        type: string
+        require: true
+      meioNome:
+        type: string
+      ultimoNome:
+        type: string
+        require: true
+      imagePath:
+        type: string
+      descricao:
+        type: string
+        required: true
+        enum: ['Professor Associado', 'Professor Colaborador', 'Pesquisador Ativo', 'Pesquisador Egresso', 'Pesquisador Parceiro']
+      email:
+        type: string
+      lattes:
+        type: string
+      nomeCompleto:
+        type: string
+    Projeto:
+      nome:
+        type: string
+        required: true
+      auxilios:
+        type: array
+        items:
+          $ref: '#/components/schemas/Instituicao'
+      dataInicio:
+        type: string
+        require: true
+      dataFim:
+        type: string
+        require: true
+      pesquisadores:
+        type: array
+        items:
+          $ref: '#/components/schemas/Pesquisador'
+      linhas:
+        type: array
+        items:
+          $ref: '#/components/schemas/Linha'
+      descricao:
+        type: string
+        required: true
+    Publicacao:
+      titulo:
+        type: string
+        require: true
+      ano:
+        type: integer
+        format: int32
+        require: true
+        minLength: 4
+        maxLength: 4
+      descricao:
+        type: string
+        require: true
+      link:
+        type: string
+      categoria:
+        type: string
+        required: true
+    Sobre:
+      nome:
+        type: string
+        required: true
+      sigla:
+        type: string
+        required: true
+      logoPath:
+        type: string
+      imagePath:
+        type: string
+      descricao:
+        type: string
+        required: true
+      telefone:
+        type: string
+      email:
+        type: string
+      endereco:
+        type: string
+      facebook:
+        type: string
+      twutter:
+        type: string
+      instagram:
+        type: string
+    Tema:  
+      corDestaque:
+        type: string
+        uniqueItems: true
+      corUm:
+        type: string
+        uniqueItems: true
+      corDois:
+        type: string
+        uniqueItems: true
   responses:
+    NotFound:
+      description: O recurso não foi encontrado.
+    IllegalInput:
+      description: Entrada ilegal para a operação.
+    GeneralError:
+      description: Erro Geral
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErroGeral'
   parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Especifica o primeiro registro da página.
+      default: 0
+      required: true
+      schema:
+        type: integer
+        format: int32
+        example:
+          summary:
+          description:
+          value:
+          externalValue:
+      examples:
+    limitParam:
+      name: limit
+      in: query
+      description: Especifica o limte de registros a serem retornados.
+      default: 100
+      require: true
+      schema:
+        type: integer
+        format: int32
+        example:
+          summary:
+          description:
+          value:
+          externalValue:
+      examples:
+    sortParam:
+      name: sort
+      in: query
+      description: >
+        Define a ordenção dos dados retornados, de modo que, contém o campo
+        chave da ordenação seguido por ":" para especificar se deseja dados em
+        ordem ascendente ou descendente, além da vírgula de separação dos campos.
+      schema:
+        type: string
+        example:
+          summary:
+          description:
+          value:
+          externalValue:
+      examples:
+    
   examples:
   requestBodies:
   headers:
@@ -110,5 +516,17 @@ components:
   callbacks:
 
 security:
+  type:
+  description:
+  name:
+  in:
+  scheme:
+  bearerFormat:
+  flows:
+  openIdConnectUrl:
+
 tags:
+- name: idiomas
+  description: "Operações sobre idiomas"
+  externalDocs:
 externalDocs:

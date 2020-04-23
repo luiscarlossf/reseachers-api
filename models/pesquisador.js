@@ -4,23 +4,20 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var PesquisadorSchema = new Schema({
-    labGroup: {
+    labgroup: {
         type: Schema.Types.ObjectId,
         ref: 'LabGroup'
     },
     primeiroNome: {
         type: String,
-        require: true,
-        maxlength: 200
+        require: true
     },
     meioNome: {
-        type: String,
-        maxlength: 200
+        type: String
     },
     ultimoNome: {
         type: String,
-        require: true,
-        maxlength: 200
+        require: true
     },
     imagemPath: {
         type: String
@@ -45,7 +42,7 @@ Pesquisadorchema.virtual('nomeCompleto').get(function(){
 
 //Virtual para URL do Pesquisador
 Pesquisadorchema.virtual('url').get(function(){
-    return '/pesquisador/' + this._id;
+    return '/pesquisadores/' + this._id;
 });
 
 //Exportando o modelo Pesquisador

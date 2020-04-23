@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var LinhaSchema = new Schema({
-    labGroup: {
+    labgroup: {
         type: Schema.Types.ObjectId,
         ref: 'LabGroup'
     },
@@ -23,7 +23,7 @@ var LinhaSchema = new Schema({
 
 //Virtual para URL da Linha de Pesquisa
 LinhaSchema.virtual('url').get(function(){
-    return '/linha/' + this._id;
+    return '/linhas/' + this._id;
 });
 
 //Exportando o modelo Linha

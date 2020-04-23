@@ -6,8 +6,7 @@ var Schema = mongoose.Schema;
 var PublicacaoSchema = new Schema({
     titulo: {
         type: String, 
-        required: true, 
-        maxlength: 300
+        required: true
     },
     ano: {
         type: Number, 
@@ -31,7 +30,7 @@ var PublicacaoSchema = new Schema({
 
 //Virtual para URL do Publicacao
 PublicacaoSchema.virtual('url').get(function(){
-    return '/publicacao/' + this._id;
+    return '/publicacoes/' + this._id;
 });
 
 //Exportando o modelo Publicacao

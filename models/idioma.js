@@ -4,6 +4,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var IdiomaSchema = new Schema({
+    codigo: {
+        type: String,
+        unique: true,
+        required: true
+    },
     nome: {
         type: String, 
         unique: true, 
@@ -16,8 +21,10 @@ var IdiomaSchema = new Schema({
 
 //Virtual para URL do Idioma
 IdiomaSchema.virtual('url').get(function(){
-    return '/idioma/' + this._id;
+    return '/idiomas/' + this._id;
 });
+
+IdiomaSchema.set('toJSON', { virtuals: true });
 
 //Exportando o modelo Idioma
 module.exports = mongoose.model('Idioma', IdiomaSchema);

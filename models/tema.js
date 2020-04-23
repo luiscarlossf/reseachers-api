@@ -22,7 +22,7 @@ var TemaSchema = new Schema({
 
 //Virtual para URL do Tema
 TemaSchema.virtual('url').get(function(){
-    return '/idioma/' + this._id;
+    return '/idiomas/' + this._id;
 });
 
 //Exportando o modelo Tema

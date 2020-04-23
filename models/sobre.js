@@ -23,8 +23,7 @@ var SobreSchema = new Schema({
         required: true
     },
     telefone: {
-        type: String, 
-        maxlength: 20
+        type: String
     },
     email: {
         type: String
@@ -45,7 +44,7 @@ var SobreSchema = new Schema({
 
 //Virtual para URL do Sobre
 SobreSchema.virtual('url').get(function(){
-    return '/sobre/' + this._id;
+    return '/sobres/' + this._id;
 });
 
 //Exportando o modelo Sobre

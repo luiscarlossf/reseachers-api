@@ -24,7 +24,7 @@ IdiomaSchema.virtual('url').get(function(){
     return '/idiomas/' + this._id;
 });
 
-IdiomaSchema.set('toJSON', { virtuals: true });
+IdiomaSchema.set('toJSON', { virtuals: false });
 
 //Exportando o modelo Idioma
 module.exports = mongoose.model('Idioma', IdiomaSchema);

@@ -10,22 +10,22 @@ var PesquisadorSchema = new Schema({
     },
     primeiroNome: {
         type: String,
-        require: true
+        require: [true, 'A propriedade `primeiroNome` é obrigatória.']
     },
     meioNome: {
         type: String
     },
     ultimoNome: {
         type: String,
-        require: true
-    },
-    imagemPath: {
-        type: String
+        require: [true, 'A propriedade `ultimoNome` é obrigatória.']
     },
     descricao: {
         type: String,
-        required: true,
+        required: [true, 'A propriedade `descricao` é obrigatória.'],
         enum: ['Professor Associado', 'Professor Colaborador', 'Pesquisador Ativo', 'Pesquisador Egresso', 'Pesquisador Parceiro']
+    },
+    imagemPath: {
+        type: String
     },
     email: {
         type: String

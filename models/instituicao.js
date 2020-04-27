@@ -6,18 +6,18 @@ var Schema = mongoose.Schema;
 var InstituicaoSchema = new Schema({
     nome: {
         type: String,
-        require: true
+        require: [true, 'A propriedade `nome` é obrigatória.']
+    },
+    categoria: {
+        type: String,
+        enum: ['Empresa Parceira', 'Instituição Parceira', 'Empresa Apoiadora', 'Instituição Apoiadora'],
+        require: [true, 'A propriedade `categoria` é obrigatória.']
     },
     logoPath: {
         type: String,
     },
     linkSite: {
         type: String
-    },
-    categoria: {
-        type: String,
-        enum: ['Empresa Parceira', 'Instituição Parceira', 'Empresa Apoiadora', 'Instituição Apoiadora'],
-        required: true
     }
 });
 

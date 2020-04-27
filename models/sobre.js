@@ -6,21 +6,21 @@ var Schema = mongoose.Schema;
 var SobreSchema = new Schema({
     nome:{
         type: String, 
-        required: true
+        required: [true, 'A propriedade `nome` é obrigatória.']
     },
     sigla: {
         type: String, 
-        required: true
+        required: [true, 'A propriedade `sigla` é obrigatória.']
+    },
+    descricao: {
+        type: String, 
+        required: [true, 'A propriedade `descricao` é obrigatória.']
     },
     logoPath: {
         type: String
     },
     imagemPath: {
         type: String
-    },
-    descricao: {
-        type: String, 
-        required: true
     },
     telefone: {
         type: String

@@ -6,19 +6,19 @@ var Schema = mongoose.Schema;
 var ProjetoSchema = new Schema({
     nome: {
         type: String,
-        required: true
+        required: [true, 'A propriedade `nome` é obrigatória.']
     },
-    auxilios: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Instituicao'
-    }],
+    descricao: {
+        type: String,
+        required: [true, 'A propriedade `descricao` é obrigatória.']
+    },
     dataInicio: {
         type: Date,
-        require:true
+        require: [true, 'A propriedade `dataInicio` é obrigatória.']
     },
     dataFim: {
         type: Date,
-        require:true
+        require: [true, 'A propriedade `dataFim` é obrigatória.']
     },
     pesquisadores: [{
         type: Schema.Types.ObjectId,
@@ -28,10 +28,12 @@ var ProjetoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Linha'
     }],
-    descricao: {
-        type: String,
-        required: true
-    }
+    
+    auxilios: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Instituicao'
+    }],
+    
 });
 
 //Virtual para finalizado do Projeto, indica se o projeto já foi finalizado

@@ -6,17 +6,17 @@ var Schema = mongoose.Schema;
 var LabGroupSchema = new Schema({
     link:{
         type: String,
-        required: true
+        required: [true, 'A propriedade `link` é obrigatória.']
     },
     tipo:{
         type: String,
-        required: true,
+        required: [true, 'A propriedade `tipo` é obrigatória.'],
         enum: ['Laboratório de Pesquisa', 'Grupo de Pesquisa', 'Núcleo de Pesquisa']
     },
     
     responsavel: {
         type: Schema.Types.ObjectId,
-        require: true,
+        require: [true, 'A propriedade `responsavel` é obrigatória.'],
         ref: 'Pesquisador'
     },
     idioma: {

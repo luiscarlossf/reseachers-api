@@ -6,17 +6,17 @@ var Schema = mongoose.Schema;
 var TemaSchema = new Schema({
     corDestaque: {
         type: String, 
-        required: true, 
+        required: [true, 'A propriedade `corDestaque` é obrigatória.'], 
         unique: true
     },
     corUm: {
         type: String, 
-        required: true, 
+        required: [true, 'A propriedade `corUm` é obrigatória.'], 
         unique: true
     },
     corDois: {
         type: String, 
-        unique: true
+        unique: [true, 'A propriedade `corDois` é obrigatória.']
     }
 });
 

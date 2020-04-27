@@ -7,12 +7,12 @@ var IdiomaSchema = new Schema({
     codigo: {
         type: String,
         unique: true,
-        required: true
+        required: [true, 'A propriedade `codigo` é obrigatória.']
     },
     nome: {
         type: String, 
         unique: true, 
-        required: true
+        required: [true, 'A propriedade `nome` é obrigatória.']
     },
     imagePath: {
         type: String
@@ -20,7 +20,7 @@ var IdiomaSchema = new Schema({
 });
 
 //Virtual para URL do Idioma
-IdiomaSchema.virtual('url').get(function(){
+IdiomaSchema.virtual('uri').get(function(){
     return '/idiomas/' + this._id;
 });
 

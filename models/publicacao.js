@@ -6,25 +6,25 @@ var Schema = mongoose.Schema;
 var PublicacaoSchema = new Schema({
     titulo: {
         type: String, 
-        required: true
+        required: [true, 'A propriedade `titulo` é obrigatória.']
     },
     ano: {
         type: Number, 
-        required: true, 
-        min: 4, 
-        max: 4
+        required: [true, 'A propriedade `ano` é obrigatória.'], 
+        min: [4, 'Valor muito pequeno para a propriedade `ano`.'],
+        max: [4, 'Valor muito grande para a propriedade `ano`.']
     },
     descricao: {
         type: String, 
-        required: true
-    },
-    link: {
-        type: String 
+        required: [true, 'A propriedade `descricao` é obrigatória.']
     },
     categoria: {
         type: String, 
-        required: true, 
+        required: [true, 'A propriedade `categoria` é obrigatória.'], 
         enum: ['Artigo', 'Dissertação', 'Monografia', 'Tese']
+    },
+    link: {
+        type: String 
     }
 });
 

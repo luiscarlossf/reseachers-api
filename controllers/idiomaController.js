@@ -4,8 +4,8 @@ var async = require('async');
 
 //Retorna uma lista de todos os idiomas
 exports.idiomaList = function(req, res, next){
-    var offset = 0; //A lista de recursos inicia do 0
-    var limit = 1000; //Limite máximo de recursos retornados.
+    var offset = 0; //A lista de recursos inicia do 0 por padrão.
+    var limit = 1000; //Limite máximo de recursos retornados por padrão.
     var sort = req.query.sort? req.query.sort : {codigo: 'asc'}; //Padrão de ordenação
 
     if(req.query.offset){

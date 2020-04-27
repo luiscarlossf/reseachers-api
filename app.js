@@ -1,18 +1,18 @@
+require('dotenv-safe').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
-
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usuariosRouter = require('./routes/usuarios');
 var v1Router = require('./routes/v1');
-
+var mongoose = require('mongoose');
+var passport = require('./controllers/authController').passport;
 var app = express();
 
-//Importa o módulo mongoose
-var mongoose = require('mongoose');
+
 
 //Configura a conexão padrão do mongoose
 var mongoDB = 'mongodb://myTester:lgptest2020@127.0.0.1:27017/?authSource=test';
@@ -34,14 +34,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(passport.initialize());
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/usuarios', usuariosRouter);
 app.use('/v1', v1Router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  console.log("Passei aqui 404 error");
   next(createError(404));
 });
 

@@ -11,12 +11,17 @@ var projetoController = require('../controllers/projetoController');
 var publicacaoController = require('../controllers/publicacaoController');
 var sobreController = require('../controllers/sobreController');
 var temaController = require('../controllers/temaController');
+var authController = require('../controllers/authController');
 
 //// INDEX PAGE /v1 ////
 
 router.get('/', function(req, res, next){
     res.render('index', { title: 'Research API 1.0.0', conteudo: 'Research API'});
 });
+
+//// LOGIN ////
+
+router.post('/login', authController.login);
 
 //// IDIOMA ROUTES ////
 

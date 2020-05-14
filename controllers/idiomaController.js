@@ -44,11 +44,11 @@ exports.idiomaList = function(req, res, next){
      */
     var sort = req.query.sort? req.query.sort : {codigo: 'asc'}; //Padrão de ordenação
 
-    if(!(offset && limit)){
+    if(!(offset) && !(limit)){
         err = new Error("Os parâmetros de paginação devem ter valor inteiro.");
         err.status = 400;
         err.name = "InvalidArgumentError";
-        error.isOperacional = true;
+        err.isOperacional = true;
         return next(err);
     }
     
@@ -57,8 +57,8 @@ exports.idiomaList = function(req, res, next){
     .sort(sort)
     .skip(offset)
     .limit(limit) 
-    .exec(function (error, lista_idioma){
-        if(error){return next(error);}
+    .exec(function (err, lista_idioma){
+        if(err){return next(err);}
         res.status(200).json(lista_idioma);
     });
 };
@@ -80,9 +80,9 @@ exports.idiomaCreate = function(req, res, next){
     req.accepts('json');
     if (Object.entries(req.body).length){
         idioma = new Idioma(req.body);
-        idioma.save(function (error){
-            if (error){
-                next(error);
+        idioma.save(function (err){
+            if (err){
+                return next(err);
             }
             idiomaURI = uri.getURI(req, 'idiomas', idioma.id);
             res.set('Location', idiomaURI)
@@ -93,7 +93,7 @@ exports.idiomaCreate = function(req, res, next){
         err = new Error("A requisição requer um elemento a ser criado deve ser representado por um objeto JSON no body.");
         err.status = 400;
         err.name = "InvalidInputError";
-        error.isOperacional = true;
+        err.isOperacional = true;
         next(err);
     }  
 };
@@ -114,9 +114,9 @@ exports.idiomaCreate = function(req, res, next){
 exports.idiomaDetail = function(req, res, next){
     req.accepts('json');
     Idioma.findById(req.params.id)
-    .exec(function (error, idioma){
-        if(error){
-            next(error);
+    .exec(function (err, idioma){
+        if(err){
+            return next(err);
         }
         res.status(200).json(idioma.toJSON());
     });
@@ -138,18 +138,18 @@ exports.idiomaUpdatePut = function(req, res, next){
     req.accepts('json');
     if (Object.entries(req.body).length){
         if(('id' in req.body) || ('_id' in req.body)){
-            error = new Error("É impossível atualizar o identificador de um recurso, se você deseja adicionar um novo recurso use o método POST.");
-            error.name = "InvalidInputError"
-            error.status = 406
-            error.isOperacional = true;
-            next(error);
+            err = new Error("É impossível atualizar o identificador de um recurso, se você deseja adicionar um novo recurso use o método POST.");
+            err.name = "InvalidInputError"
+            err.status = 406
+            err.isOperacional = true;
+            return next(err);
         }
         codigo = req.body.codigo;
         nome = req.body.nome;
         imagePath = req.body.imagePath;
-        Idioma.findByIdAndUpdate(req.params.id,{codigo: codigo, nome: nome, imagePath: imagePath}, {new: true}, function (error, idioma){
-            if(error){
-                next(error);
+        Idioma.findByIdAndUpdate(req.params.id,{codigo: codigo, nome: nome, imagePath: imagePath}, {new: true}, function (err, idioma){
+            if(err){
+                return next(err);
             }else{
                 idiomaURI = uri.getURI(req, 'idiomas', idioma.id);
                 res.set('Location', idiomaURI)
@@ -161,8 +161,8 @@ exports.idiomaUpdatePut = function(req, res, next){
         err = new Error("A requisição requer um elemento a ser criado deve ser representado por um objeto JSON no body.");
         err.status = 400;
         err.name = "InvalidInputError";
-        error.isOperacional = true;
-        next(err);
+        err.isOperacional = true;
+        return next(err);
     }
 };
 
@@ -181,9 +181,9 @@ exports.idiomaUpdatePut = function(req, res, next){
 exports.idiomaDelete = function(req, res, next){
     req.accepts('json');
     Idioma.findByIdAndDelete(req.params.id)
-    .exec(function (error){
-        if(error){
-            next(error);
+    .exec(function (err){
+        if(err){
+            return next(err);
         }
         res.status(204).json();
     });
@@ -205,15 +205,15 @@ exports.idiomaUpdatePatch = function(req, res, next){
     req.accepts('json');
     if (Object.keys(req.body).length){
         if(('id' in req.body) || ('_id' in req.body)){
-            error = new Error("É impossível atualizar o identificador de um recurso, se você deseja adicionar um novo recurso use o método POST.");
-            error.name = "InvalidInputError"
-            error.status = 406
-            error.isOperacional = true;
-            next(error);
+            err = new Error("É impossível atualizar o identificador de um recurso, se você deseja adicionar um novo recurso use o método POST.");
+            err.name = "InvalidInputError"
+            err.status = 406
+            err.isOperacional = true;
+            return next(err);
         }
-        Idioma.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (error, idioma){
-            if(error){
-                next(error);
+        Idioma.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, idioma){
+            if(err){
+                return next(err);
             }else{
                 idiomaURI = uri.getURI(req, 'idiomas', idioma.id)
                 res.set('Location', idiomaURI)
@@ -225,7 +225,7 @@ exports.idiomaUpdatePatch = function(req, res, next){
         err = new Error("A requisição requer um elemento a ser criado deve ser representado por um objeto JSON no body.");
         err.status = 400;
         err.name = "InvalidInputError";
-        error.isOperacional = true;
-        next(err);
+        err.isOperacional = true;
+        return next(err);
     }
 };

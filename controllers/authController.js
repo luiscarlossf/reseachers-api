@@ -11,6 +11,8 @@ opts.issuer = process.env.HOSTNAME;
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     Usuario.findOne({_id: jwt_payload.sub}, function(err, usuario) {
         if (err) {
+            err.isOperacional = true;
+            err.status = 401
             return done(err, false);
         }
         if (usuario) {
@@ -27,6 +29,8 @@ exports.login = function(req, res, next){
     Usuario.findOne({email: req.body.email}, function(err, usuario){
         console.log("Gerando token ...");
         if(err){
+            err.isOperacional = true;
+            err.status = 401
             return next(err);
         }
         if(usuario){

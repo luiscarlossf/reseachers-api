@@ -10,19 +10,34 @@ var usuariosRouter = require('./routes/usuarios');
 var v1Router = require('./routes/v1');
 var mongoose = require('mongoose');
 var passport = require('./controllers/authController').passport;
+var errorHandlers = require('./handlers/errorHandlers');
 var app = express();
 
 
 
 //Configura a conexão padrão do mongoose
 var mongoDB = 'mongodb://myTester:lgptest2020@127.0.0.1:27017/?authSource=test';
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+indexing = process.env.NODE_ENV === 'development';
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: indexing }, function(error){
+  if(error){
+    error.isOperacional = true;
+    error.status = 500;
+    error.name = "DBConnectionError";
+    next(error);
+ }
+});
 
 //Obtém a conexão padrão
 var db = mongoose.connection;
 
 //Vincula a conexão ao evento de erros (para obter notificações de erros da conexão)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('error', error =>{
+  console.error.bind(console, 'MongoDB connection error:');
+  error.isOperacional = true;
+  error.status = 500;
+  error.name = "DBConnectionError";
+  next(error);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +58,11 @@ app.use('/v1', v1Router);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+//Manipulando erros
+app.use(errorHandlers.mongooseErrorHandler);
+app.use(errorHandlers.operationalErrorHandler);
+app.use(errorHandlers.errorHandler);
 
 // error handler
 app.use(function(err, req, res, next) {
